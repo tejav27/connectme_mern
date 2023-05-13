@@ -3,7 +3,6 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 
 //create a post
-
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);
   try {
@@ -13,8 +12,8 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-//update a post
 
+//update a post
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -28,8 +27,8 @@ router.put("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-//delete a post
 
+//delete a post
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -43,8 +42,8 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-//like / dislike a post
 
+//like / dislike a post
 router.put("/:id/like", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -59,8 +58,8 @@ router.put("/:id/like", async (req, res) => {
     res.status(500).json(err);
   }
 });
-//get a post
 
+//get a post
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -70,8 +69,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//get timeline posts
 
+//get timeline posts
 router.get("/timeline/:userId", async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId);
@@ -88,7 +87,6 @@ router.get("/timeline/:userId", async (req, res) => {
 });
 
 //get user's all posts
-
 router.get("/profile/:username", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
@@ -98,5 +96,42 @@ router.get("/profile/:username", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//Add a comment
+router.post("/:id/comment", async (req, res) =>{
+  let user = await User.findOne({ _id:req.body.userId  });
+  try{
+    Post.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: { userId: req.body.userId, text: req.body.commentText, userName:user.username } } },
+      { new: true },
+      (err, post) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.status(200).json(post);
+        }
+      }
+    );
+  }catch(err){
+    res.status(500).json(err);
+  }
+})
+
+//Get all comments
+router.get("/:id/comments", async(req,res) =>{
+  try{
+    const post = await Post.findById(req.params.id);
+    const comments = post.comments;
+    console.log(comments,"commentssssss");
+    if(comments){
+      res.status(200).json(comments)
+    }else{
+      res.status(204).json({meesage:"No comments found"});
+    }
+  }catch(err){
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router;
