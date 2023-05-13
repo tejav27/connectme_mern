@@ -35,10 +35,19 @@ export default function Post({ post }) {
     fetchUser();
   }, [post.userId]);
 
-  const likeHandler = () => {
+  useEffect(() => {
+    const fetchComments = async () => {
+      const res = await axios.get("/posts/" + post._id + "/comments");
+      setComments(res.data);
+    };
+    fetchComments();
+    console.log("comments form comment handler:", comments);
+  }, []);
+
+  const likeHandler = async () => {
     try {
-      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (err) {}
+      await axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+    } catch (err) { }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -47,14 +56,25 @@ export default function Post({ post }) {
   }
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    setComments([...comments, comment]);
     setComment("");
+    commentHandler();
   };
+
+  const commentHandler = async () => {
+    try {
+      await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, commentText: comment });
+      // let allComments = await axios.get("/posts/" + post._id + "/comments");
+      // setComments(allComments.data);
+      // console.log("comments form comment handler:", comments);
+      // console.log("Allcomments form comment handler:", allComments.data);
+    } catch (err) {
+    }
+  }
+
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
 
-  console.log("comments::", comments)
   return (
     <div className="post">
       <div className="postWrapper">
@@ -70,12 +90,12 @@ export default function Post({ post }) {
                 }
                 alt=""
               />
-            <span className="postUsername">{user.username}</span>
+              <span className="postUsername">{user.username}</span>
             </Link>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert onClick={handlePostOptions}/>
+            <MoreVert onClick={handlePostOptions} />
           </div>
         </div>
         <div className="postCenter">
@@ -84,36 +104,47 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomMain">
-          <div className="postBottomLeft">
-            {isLiked? <ThumbUpAltIcon onClick={likeHandler} /> : <ThumbUpAltOutlinedIcon onClick={likeHandler}/>} 
-            <p className="postLikeCounter">{like} <span>Likes</span></p>
-          </div>
-          <IconButton className="postBottomRight" onClick={() => setIsComments(!isComments)}>
+            <div className="postBottomLeft">
+              {isLiked ? <ThumbUpAltIcon onClick={likeHandler} /> : <ThumbUpAltOutlinedIcon onClick={likeHandler} />}
+              <p className="postLikeCounter">{like} <span>Likes</span></p>
+            </div>
+            <IconButton className="postBottomRight" onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
-            <Typography className="postCommentText">{post.comments.length} comments</Typography>
+              <Typography className="postCommentText">{post.comments.length} comments</Typography>
             </IconButton>
           </div>
-            <form className="postBottomForm" onSubmit={handleCommentSubmit}>
-        <textarea
-          placeholder="Write your comment here"
-          value={comment}
-          onChange={handleCommentChange}
-        ></textarea>
-        <button type="submit">Send</button>
-      </form>
-            {/* {isComments && (
-        <Box mt="0.5rem">
-          {post.comments.map((comment, i) => (
-            <Box key={`${post.username}-${i}`}>
+          <form className="postBottomForm" onSubmit={handleCommentSubmit}>
+            <textarea
+              placeholder="Write your comment here"
+              value={comment}
+              onChange={handleCommentChange}
+            ></textarea>
+            <button onClick={handleCommentSubmit} type="submit">Send</button>
+          </form>
+          {isComments && (
+            <Box mt="0.5rem">
+              {comments.map((comment) => (
+                <Box key={comment._id}>
+                  <Divider />
+                  <Typography sx={{ m: "0.5rem 0", pl: "1rem" }}>
+                    <h4>
+                    {comment.userName}
+                    </h4>
+                    {comment.text}
+                  </Typography>
+                </Box>
+              ))}
               <Divider />
-              <Typography sx={{ m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
-              </Typography>
             </Box>
-          ))}
-          <Divider />
-        </Box>
-      )} */}
+            //          <div>
+            //   {comments.map((comment) => (
+            //     <div key={comment._id}>
+            //       <span>{comment.userName}: </span>
+            //       <span>{comment.text}</span>
+            //     </div>
+            //   ))}
+            // </div>
+          )}
         </div>
       </div>
     </div>
