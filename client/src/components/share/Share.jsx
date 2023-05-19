@@ -1,9 +1,6 @@
 import "./share.css";
 import {
   PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
@@ -28,7 +25,6 @@ export default function Share() {
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
-      console.log(newPost);
       try {
         await axios.post("/upload", data);
       } catch (err) {}
@@ -78,18 +74,6 @@ export default function Share() {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            <div className="shareOption">
-              <Label htmlColor="blue" className="shareIcon" />
-              <span className="shareOptionText">Tag</span>
-            </div>
-            <div className="shareOption">
-              <Room htmlColor="green" className="shareIcon" />
-              <span className="shareOptionText">Location</span>
-            </div>
-            <div className="shareOption">
-              <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
-              <span className="shareOptionText">Feelings</span>
-            </div>
           </div>
           <button className="shareButton" type="submit">
             Share

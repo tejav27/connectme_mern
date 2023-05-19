@@ -43,5 +43,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8800/api"
+  "proxy": "http://localhost:8800/api",
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
+  }
 }

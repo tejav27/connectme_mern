@@ -2,6 +2,8 @@ import axios from "axios";
 import { useRef } from "react";
 import "./register.css";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+
 
 export default function Register() {
   const username = useRef();
@@ -31,15 +33,14 @@ export default function Register() {
 
   return (
     <div className="login">
-      <div className="loginWrapper">
+      <div className="registerWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
-          <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+          <h3 className="loginLogo">ConnectMe</h3>
+          <span className="registerDesc">
+          Empowering Connections, Amplifying Voices
           </span>
-        </div>
-        <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
+          <br />
+          <form className="registerBox" onSubmit={handleClick}>
             <input
               placeholder="Username"
               required
@@ -71,8 +72,18 @@ export default function Register() {
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
           </form>
+          <br />
+          <p>
+            Already has an account?
+          </p>
+          <br />
+          <Link to={`/login`}>
+            <button className="loginRegisterButton">Log into Account</button>
+          </Link>
+        </div>
+        <div className="loginRight">
+          <img className="sideImage"src="assets/connections.webp" alt="" />
         </div>
       </div>
     </div>

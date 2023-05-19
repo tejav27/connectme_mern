@@ -1,6 +1,78 @@
 const User = require("../models/User");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const multer = require('multer');
+const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
+
+const storageCover = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/coverPic");
+  },
+  filename: function (req, file, cb) {
+    const filename = Date.now() + '-' + file.originalname;
+    cb(null, filename);
+  },
+});
+
+const uploadCover = multer({ storage: storageCover });
+
+router.put('/:id/uploadCoverPic', uploadCover.single('coverPicture'), async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const file = req.file;
+
+    if (!file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { coverPicture: file.filename },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/profilePic");
+  },
+  filename: function (req, file, cb) {
+    const filename = Date.now() + '-' + file.originalname;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.put('/:id/uploadProfPic', upload.single('profilePicture'), async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const file = req.file;
+
+    if (!file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: file.filename },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 //update user
 router.put("/:id", async (req, res) => {
@@ -76,8 +148,12 @@ router.get("/friends/:userId", async (req, res) => {
     const friends = await Promise.all(
       user.followings.map((friendId) => {
         return User.findById(friendId);
+      }),
+      user.followers.map((friendId) => {
+        return User.findById(friendId);
       })
     );
+    console.log("friends from route users", friends);
     let friendList = [];
     friends.map((friend) => {
       const { _id, username, profilePicture } = friend;

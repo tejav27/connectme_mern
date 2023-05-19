@@ -1,15 +1,44 @@
 import "./online.css";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default function Online({user}) {
+export default function Online({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [users, setUsers] = useState({});
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users/friends/${user._id}`);
+      setUsers(res.data);
+    };
+    fetchUser();
+  }, []);
 
   return (
-    <li className="rightbarFriend">
-      <div className="rightbarProfileImgContainer">
-        <img className="rightbarProfileImg" src={PF+user.profilePicture} alt="" />
-        <span className="rightbarOnline"></span>
-      </div>
-      <span className="rightbarUsername">{user.username}</span>
-    </li>
+    <div>
+      {Array.isArray(users) ? (
+        users.map((user, index) => (
+          <li key={index} className="rightbarFriend">
+            <Link
+              to={`/profile/${user.username}`}
+              className="rightbarFriendLink"
+            >
+              <img
+                src={
+                  user.profilePicture
+                    ? PF + "profilePic/" + user.profilePicture
+                    : PF + "person/noAvatar.png"
+                }
+                alt=""
+                className="rightbarFriendImg"
+              />
+              <span className="rightbarFriendName">{user.username}</span>
+            </Link>
+          </li>
+        ))
+      ) : (
+        <li>Sorry, no suggestions found.</li>
+      )}
+    </div>
   );
 }

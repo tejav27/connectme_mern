@@ -14,13 +14,21 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const username = useParams().username;
   const { user: loggedInUser } = useContext(AuthContext);
+  const [userChanged, setUserChanged]= useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/users?username=${username}`);
       setUser(res.data);
     };
     fetchUser();
-  }, [username, user]);
+  }, [username]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?username=${username}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [userChanged]);
 
   const fileInputRef = useRef(null);
   const fileCoverInputRef = useRef(null);
@@ -49,6 +57,7 @@ export default function Profile() {
         }
       );
       if (response.ok) {
+        setUserChanged(!userChanged);
         console.log("file uploaded successfully", response);
       } else {
         console.log("some prblem", response);
@@ -59,8 +68,6 @@ export default function Profile() {
   };
   const handlePictureUpload = async (event) => {
     const file = event.target.files[0];
-    console.log("file uploaded::", file);
-
     const formData = new FormData();
     formData.append("profilePicture", file);
 
@@ -70,6 +77,7 @@ export default function Profile() {
         body: formData,
       });
       if (response.ok) {
+        setUserChanged(!userChanged);
         console.log("file uploaded successfully", response);
       } else {
         console.log("some prblem", response);

@@ -9,6 +9,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -49,7 +50,17 @@ export default function Post({ post }) {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
-  const handlePostOptions = () => {};
+  const handleDeletePost = async () => {
+    try{
+      await axios.delete("/posts/"+post._id, {
+        data: {
+          userId: currentUser._id,
+        }
+      });
+    }catch(err){
+      console.log("couldn't delete post");
+    }
+  };
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     setComment("");
@@ -93,7 +104,7 @@ export default function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert onClick={handlePostOptions} />
+            < DeleteOutlinedIcon onClick={handleDeletePost} />
           </div>
         </div>
         <div className="postCenter">
