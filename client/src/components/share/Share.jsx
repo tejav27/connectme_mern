@@ -38,7 +38,7 @@ export default function Share() {
       window.location.reload();
     } catch (err) {}
   };
-
+  
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -47,8 +47,8 @@ export default function Share() {
             className="shareProfileImg"
             src={
               user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
+              ? PF + "profilePic/" + user.profilePicture
+              : PF + "person/noAvatar.png"
             }
             alt=""
           />

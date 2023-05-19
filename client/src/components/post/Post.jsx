@@ -1,10 +1,8 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
-import {
-  ChatBubbleOutlineOutlined
-} from "@mui/icons-material";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import { ChatBubbleOutlineOutlined } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -21,7 +19,6 @@ export default function Post({ post }) {
   const [isComments, setIsComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -41,19 +38,18 @@ export default function Post({ post }) {
       setComments(res.data);
     };
     fetchComments();
-    console.log("comments form comment handler:", comments);
   }, []);
 
   const likeHandler = async () => {
     try {
-      await axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (err) { }
+      await axios.put("/posts/" + post._id + "/like", {
+        userId: currentUser._id,
+      });
+    } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
-  const handlePostOptions = () => {
-
-  }
+  const handlePostOptions = () => {};
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     setComment("");
@@ -62,14 +58,16 @@ export default function Post({ post }) {
 
   const commentHandler = async () => {
     try {
-      await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, commentText: comment });
+      await axios.post("/posts/" + post._id + "/comment", {
+        userId: currentUser._id,
+        commentText: comment,
+      });
       // let allComments = await axios.get("/posts/" + post._id + "/comments");
       // setComments(allComments.data);
       // console.log("comments form comment handler:", comments);
       // console.log("Allcomments form comment handler:", allComments.data);
-    } catch (err) {
-    }
-  }
+    } catch (err) {}
+  };
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -85,7 +83,7 @@ export default function Post({ post }) {
                 className="postProfileImg"
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? PF + "profilePic/" + user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
@@ -105,12 +103,23 @@ export default function Post({ post }) {
         <div className="postBottom">
           <div className="postBottomMain">
             <div className="postBottomLeft">
-              {isLiked ? <ThumbUpAltIcon onClick={likeHandler} /> : <ThumbUpAltOutlinedIcon onClick={likeHandler} />}
-              <p className="postLikeCounter">{like} <span>Likes</span></p>
+              {isLiked ? (
+                <ThumbUpAltIcon onClick={likeHandler} />
+              ) : (
+                <ThumbUpAltOutlinedIcon onClick={likeHandler} />
+              )}
+              <p className="postLikeCounter">
+                {like} <span>Likes</span>
+              </p>
             </div>
-            <IconButton className="postBottomRight" onClick={() => setIsComments(!isComments)}>
+            <IconButton
+              className="postBottomRight"
+              onClick={() => setIsComments(!isComments)}
+            >
               <ChatBubbleOutlineOutlined />
-              <Typography className="postCommentText">{post.comments.length} comments</Typography>
+              <Typography className="postCommentText">
+                {post.comments.length} comments
+              </Typography>
             </IconButton>
           </div>
           <form className="postBottomForm" onSubmit={handleCommentSubmit}>
@@ -119,7 +128,9 @@ export default function Post({ post }) {
               value={comment}
               onChange={handleCommentChange}
             ></textarea>
-            <button onClick={handleCommentSubmit} type="submit">Send</button>
+            <button onClick={handleCommentSubmit} type="submit">
+              Send
+            </button>
           </form>
           {isComments && (
             <Box mt="0.5rem">
@@ -127,9 +138,12 @@ export default function Post({ post }) {
                 <Box key={comment._id}>
                   <Divider />
                   <Typography sx={{ m: "0.5rem 0", pl: "1rem" }}>
-                    <h4>
-                    {comment.userName}
-                    </h4>
+                    <Link
+                      className="postProfileLink"
+                      to={`/profile/${comment.username}`}
+                    >
+                      {comment.userName}
+                    </Link>
                     {comment.text}
                   </Typography>
                 </Box>

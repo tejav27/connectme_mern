@@ -73,6 +73,7 @@
   margin-right: 15px;
   cursor: pointer;
   position: relative;
+  color: rgb(7, 69, 7);
 }
 
 .topbarIconBadge {

@@ -3,22 +3,81 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
-
+  const { user: loggedInUser } = useContext(AuthContext);
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/users?username=${username}`);
       setUser(res.data);
     };
     fetchUser();
-  }, [username]);
+  }, [username, user]);
+
+  const fileInputRef = useRef(null);
+  const fileCoverInputRef = useRef(null);
+
+  const handlePictureClick = () => {
+    if (loggedInUser._id === user._id) {
+      fileInputRef.current.click();
+    }
+  };
+  const handleCoverPictureClick = () => {
+    if (loggedInUser._id === user._id) {
+      fileCoverInputRef.current.click();
+    }
+  };
+  const handleCoverPictureUpload = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("coverPicture", file);
+
+    try {
+      const response = await fetch(
+        `/users/${loggedInUser._id}/uploadCoverPic`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        console.log("file uploaded successfully", response);
+      } else {
+        console.log("some prblem", response);
+      }
+    } catch (error) {
+      console.log("some prblem server error", error);
+    }
+  };
+  const handlePictureUpload = async (event) => {
+    const file = event.target.files[0];
+    console.log("file uploaded::", file);
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    try {
+      const response = await fetch(`/users/${loggedInUser._id}/uploadProfPic`, {
+        method: "PUT",
+        body: formData,
+      });
+      if (response.ok) {
+        console.log("file uploaded successfully", response);
+      } else {
+        console.log("some prblem", response);
+      }
+    } catch (error) {
+      console.log("some prblem server error", error);
+    }
+  };
 
   return (
     <>
@@ -28,24 +87,54 @@ export default function Profile() {
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
-              <img
-                className="profileCoverImg"
-                src={
-                  user.coverPicture
-                    ? PF + user.coverPicture
-                    : PF + "person/backgroundpic.jpeg"
-                }
-                alt=""
-              />
-              <img
-                className="profileUserImg"
-                src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
-                alt=""
-              />
+              <div>
+                <img
+                  className="profileCoverImg"
+                  src={
+                    user.coverPicture
+                      ? PF + "coverPic/" + user.coverPicture
+                      : PF + "person/backgroundpic.jpeg"
+                  }
+                  alt=""
+                  onClick={handleCoverPictureClick}
+                />
+                {loggedInUser._id === user._id ? (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverPictureUpload}
+                    ref={fileCoverInputRef}
+                    style={{ display: "none" }}
+                  />
+                ) : (
+                  <div />
+                )}
+                <div />
+              </div>
+              <div className="profilePic">
+                <img
+                  title="Upload/Edit Profile Picture"
+                  className="profileUserImg"
+                  src={
+                    user.profilePicture
+                      ? PF + "profilePic/" + user.profilePicture
+                      : PF + "person/noAvatar.png"
+                  }
+                  alt=""
+                  onClick={handlePictureClick}
+                />
+                {loggedInUser._id === user._id ? (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePictureUpload}
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                  />
+                ) : (
+                  <div />
+                )}
+              </div>
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">{user.username}</h4>

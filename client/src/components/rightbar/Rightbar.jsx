@@ -26,7 +26,6 @@ export default function Rightbar({ user }) {
     };
     getFriends();
   }, [user]);
-
   const handleClick = async () => {
     try {
       if (followed) {
@@ -64,7 +63,6 @@ export default function Rightbar({ user }) {
       </>
     );
   };
-
   const ProfileRightbar = () => {
     return (
       <>
@@ -101,13 +99,14 @@ export default function Rightbar({ user }) {
             <Link
               to={"/profile/" + friend.username}
               style={{ textDecoration: "none" }}
+              key={friend._id}
             >
               <div className="rightbarFollowing">
                 <img
                   src={
                     friend.profilePicture
-                      ? PF + friend.profilePicture
-                      : PF + "person/noAvatar.png"
+                    ? PF + "profilePic/" + friend.profilePicture
+                    : PF + "person/noAvatar.png"
                   }
                   alt=""
                   className="rightbarFollowingImg"

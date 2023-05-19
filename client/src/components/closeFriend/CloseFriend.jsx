@@ -22,8 +22,8 @@ export default function CloseFriend({ user }) {
           <img
             src={
               user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
+              ? PF + "profilePic/" + user.profilePicture
+              : PF + "person/noAvatar.png"
             }
             alt=""
             className="sidebarFriendImg"
