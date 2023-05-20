@@ -5,8 +5,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Topbar() {
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleUpdateUser = () => {
+    // Perform necessary actions to update the user data
+    const newUserData = { name: 'John Doe', email: 'john@example.com' };
+    updateUser(newUserData);
+  };
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">

@@ -8,6 +8,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function Post({ post, updatePostsFetch }) {
@@ -107,7 +108,7 @@ export default function Post({ post, updatePostsFetch }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            < DeleteOutlinedIcon onClick={handleDeletePost} style={{cursor: "pointer"}} />
+            < DeleteIcon onClick={handleDeletePost} style={{cursor: "pointer"}} />
           </div>
         </div>
         <div className="postCenter">
