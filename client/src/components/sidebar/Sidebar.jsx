@@ -4,7 +4,7 @@ import {
   Chat,
   Group,
 } from "@material-ui/icons";
-import UsersFriend from "../usersFriend/UsersFriend";
+import SuggestedFriends from "../SuggestedFriends/SuggestedFriends";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -33,7 +33,7 @@ export default function Sidebar() {
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
           <p className="sidebarFriendsListHeading">Suggested Friends</p>
-            <UsersFriend user = {user}/>
+            <SuggestedFriends user = {user}/>
         </ul>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
-export default function Share() {
+export default function Share({updatePostsFetch}) {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
@@ -31,7 +31,7 @@ export default function Share() {
     }
     try {
       await axios.post("/posts", newPost);
-      window.location.reload();
+      updatePostsFetch(true);
     } catch (err) {}
   };
   

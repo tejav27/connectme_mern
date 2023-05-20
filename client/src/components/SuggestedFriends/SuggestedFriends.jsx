@@ -1,23 +1,19 @@
-import "./usersFriend.css";
+import "./SuggestedFriends.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function UsersFriend({ user }) {
+export default function SuggestedFriends({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [users, setUsers] = useState({});
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get('/users/all');
-      const allUsers = res.data;
-      let suggestedFriends = allUsers.filter(item => item._id!==user._id)
-      // suggestedFriends.filter(item => item._id !== user.foll)
-      // const results = allUsers.filter(({ _id: id1 }) => !suggestedFriends.followings.some((id2) => id2 === id1));
-      // console.log("results::", results);
+    const fetchSuggestedFriends = async () => {
+      const res = await axios.get(`/users/suggestedfriends/${user._id}`);
+      const suggestedFriends = res.data;
       setUsers(suggestedFriends);
     };
-    fetchUser();
+    fetchSuggestedFriends();
   }, []);
 
   return (

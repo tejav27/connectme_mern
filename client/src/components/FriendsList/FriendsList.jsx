@@ -1,9 +1,9 @@
-import "./online.css";
+import "./FriendsList.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function Online({ user }) {
+export default function FriendsList({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [users, setUsers] = useState({});
   useEffect(() => {

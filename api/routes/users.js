@@ -5,6 +5,7 @@ const multer = require('multer');
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
+//upload cover picture for a user
 const storageCover = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/images/coverPic");
@@ -39,6 +40,8 @@ router.put('/:id/uploadCoverPic', uploadCover.single('coverPicture'), async (req
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+//upload profile picture for a user
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/images/profilePic");
@@ -126,6 +129,7 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 //get all users
 router.get("/all", async (req, res) => {
   try {
@@ -140,8 +144,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
-
-//get friends
+//get friends for a user
 router.get("/friends/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -164,9 +167,30 @@ router.get("/friends/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
+//get suggested friends
+router.get("/suggestedfriends/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const user = await User.findById(req.params.userId);
+    const allUsers = await User.find();
+    const friendsList = [...user.followings, user.followers, user._id];
+    const suggestedList = await Promise.all(
+      allUsers.filter(item => item._id!=userId && !user.followings.includes(item.id))
+    )
+    console.log("suggestedList", suggestedList);
+    
+    let suggetedListtoSend = [];
+    suggestedList.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      suggetedListtoSend.push({ _id, username, profilePicture });
+    });
+    res.status(200).json(suggetedListtoSend)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //follow a user
-
 router.put("/:id/follow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
@@ -188,7 +212,6 @@ router.put("/:id/follow", async (req, res) => {
 });
 
 //unfollow a user
-
 router.put("/:id/unfollow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {

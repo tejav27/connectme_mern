@@ -1,5 +1,5 @@
 import "./rightbar.css";
-import Online from "../online/Online";
+import FriendsList from "../FriendsList/FriendsList";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
@@ -51,7 +51,7 @@ export default function Rightbar({ user }) {
         <img className="rightbarAd" src="assets/ad.jpeg" alt="" />
         <h4 className="rightbarTitle">My Friends</h4>
         <ul className="rightbarFriendList">
-          <Online user={currentUser}/>
+          <FriendsList user={currentUser}/>
         </ul>
       </>
     );
@@ -87,7 +87,7 @@ export default function Rightbar({ user }) {
         </div>
         <h4 className="rightbarTitle">{user.username}'s friends</h4>
         <ul className="rightbarFriendList">
-          <Online user={user}/>
+          <FriendsList user={user}/>
         </ul>
       </>
     );

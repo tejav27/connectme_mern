@@ -1,5 +1,4 @@
 import "./post.css";
-import { MoreVert } from "@material-ui/icons";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import { ChatBubbleOutlineOutlined } from "@mui/icons-material";
@@ -11,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-export default function Post({ post }) {
+export default function Post({ post, updatePostsFetch }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -20,6 +19,7 @@ export default function Post({ post }) {
   const [isComments, setIsComments] = useState(false);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [stateChanged, setStateChanged] = useState(true);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -31,7 +31,7 @@ export default function Post({ post }) {
       setUser(res.data);
     };
     fetchUser();
-  }, [post.userId]);
+  }, [post.userId, stateChanged]);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -39,7 +39,7 @@ export default function Post({ post }) {
       setComments(res.data);
     };
     fetchComments();
-  }, []);
+  }, [stateChanged]);
 
   const likeHandler = async () => {
     try {
@@ -57,6 +57,8 @@ export default function Post({ post }) {
           userId: currentUser._id,
         }
       });
+      setStateChanged(!stateChanged);
+      updatePostsFetch(true);
     }catch(err){
       console.log("couldn't delete post");
     }
@@ -65,6 +67,7 @@ export default function Post({ post }) {
     event.preventDefault();
     setComment("");
     commentHandler();
+    setStateChanged(!stateChanged);
   };
 
   const commentHandler = async () => {
@@ -104,7 +107,7 @@ export default function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            < DeleteOutlinedIcon onClick={handleDeletePost} />
+            < DeleteOutlinedIcon onClick={handleDeletePost} style={{cursor: "pointer"}} />
           </div>
         </div>
         <div className="postCenter">
@@ -129,7 +132,7 @@ export default function Post({ post }) {
             >
               <ChatBubbleOutlineOutlined />
               <Typography className="postCommentText">
-                {post.comments.length} comments
+                {comments.length} comments
               </Typography>
             </IconButton>
           </div>

@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
+  const [updated, setUpdated] = useState(false);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -21,14 +22,20 @@ export default function Feed({ username }) {
       );
     };
     fetchPosts();
-  }, [username, user._id]);
+  }, [username, user._id, updated]);
+
+  const updatePostsFetch = (update) => {
+    if(update){
+      setUpdated(!updated);
+    }
+  }
 
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {(!username || username === user.username) && <Share />}
-        {posts.map((p) => (
-          <Post key={p._id} post={p} />
+        {(!username || username === user.username) && <Share updatePostsFetch={updatePostsFetch} />}
+        {posts.map((post) => (
+          <Post key={post._id} post={post} updatePostsFetch={updatePostsFetch}/>
         ))}
       </div>
     </div>
