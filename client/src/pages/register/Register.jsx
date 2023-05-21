@@ -37,7 +37,7 @@ export default function Register() {
         <div className="loginLeft">
           <h3 className="loginLogo">ConnectMe</h3>
           <span className="registerDesc">
-          Empowering Connections, Amplifying Voices
+          Embrace the Power of Connections     
           </span>
           <br />
           <form className="registerBox" onSubmit={handleClick}>

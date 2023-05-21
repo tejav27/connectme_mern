@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-
 export default function Login() {
   const email = useRef();
   const password = useRef();
@@ -24,9 +23,7 @@ export default function Login() {
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">ConnectMe</h3>
-          <span className="loginDesc">
-          Empowering Connections, Amplifying Voices
-          </span>
+          <span className="loginDesc">Embrace the Power of Connections</span>
           <form className="loginBox" onSubmit={handleClick}>
             <input
               placeholder="Email"
@@ -52,9 +49,9 @@ export default function Login() {
             </button>
           </form>
           <br />
-            <span>Don't have an account?</span>
-            <br />
-            <Link to={`/register`}>
+          <span>Don't have an account?</span>
+          <br />
+          <Link to={`/register`}>
             <button className="loginRegisterButton">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
@@ -62,10 +59,10 @@ export default function Login() {
                 "Create a New Account"
               )}
             </button>
-            </Link>
+          </Link>
         </div>
         <div className="loginRight">
-        <img className="sideImage"src="assets/connections.webp" alt="" />
+          <img className="sideImage" src="assets/connections.webp" alt="" />
         </div>
       </div>
     </div>

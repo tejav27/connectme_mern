@@ -32,6 +32,7 @@ export default function Share({updatePostsFetch}) {
     try {
       await axios.post("/posts", newPost);
       updatePostsFetch(true);
+      desc.current.value = '';
     } catch (err) {}
   };
   
