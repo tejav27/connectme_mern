@@ -13,7 +13,10 @@ export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
-  const { user: loggedInUser, updateUser, usergpt } = useContext(AuthContext);
+  const {
+    user: loggedInUser,
+    dispatch,
+  } = useContext(AuthContext);
   const [userChanged, setUserChanged] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,18 +30,13 @@ export default function Profile() {
     const fetchUser = async () => {
       const res = await axios.get(`/users?username=${username}`);
       setUser(res.data);
+      dispatch({ type: "UPDATEUSER", payload: res.data} );
     };
     fetchUser();
   }, [userChanged]);
 
   const fileInputRef = useRef(null);
   const fileCoverInputRef = useRef(null);
-
-  const handleUpdateUser = () => {
-    // Perform necessary actions to update the user data
-    const newUserData = { name: "John Doe", email: "john@example.com" };
-    updateUser(newUserData);
-  };
 
   const handlePictureClick = () => {
     if (loggedInUser._id === user._id) {
@@ -65,9 +63,6 @@ export default function Profile() {
       );
       if (response.ok) {
         setUserChanged(!userChanged);
-        handleUpdateUser(response.data);
-        console.log("file uploaded successfully", response);
-        console.log("usergpttttt", usergpt);
       } else {
         console.log("some prblem", response);
       }

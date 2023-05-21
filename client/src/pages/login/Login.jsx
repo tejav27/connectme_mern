@@ -10,7 +10,7 @@ export default function Login() {
   const password = useRef();
   const { isFetching, dispatch } = useContext(AuthContext);
 
-  const handleClick = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     loginCall(
       { email: email.current.value, password: password.current.value },
@@ -24,7 +24,7 @@ export default function Login() {
         <div className="loginLeft">
           <h3 className="loginLogo">ConnectMe</h3>
           <span className="loginDesc">Embrace the Power of Connections</span>
-          <form className="loginBox" onSubmit={handleClick}>
+          <form className="loginBox" onSubmit={handleLogin}>
             <input
               placeholder="Email"
               type="email"
@@ -42,7 +42,7 @@ export default function Login() {
             />
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? (
-                <CircularProgress color="white" size="20px" />
+                <CircularProgress style={{color: "white", size:"10px"}} />
               ) : (
                 "Log In"
               )}
@@ -54,7 +54,7 @@ export default function Login() {
           <Link to={`/register`}>
             <button className="loginRegisterButton">
               {isFetching ? (
-                <CircularProgress color="white" size="20px" />
+                <CircularProgress style={{color: "white", size:"10px"}}/>
               ) : (
                 "Create a New Account"
               )}

@@ -14,10 +14,6 @@ export default function ProfileRightbar({ user }) {
     setFollowed(isUserFollowed);
   }, [currentUser, user]);
 
-
-  console.log(" currentUser.followings.includes(user._id)", currentUser.followings.includes(user._id));
-  console.log("follwed", followed);
-
   const handleClick = async () => {
     try {
       if (followed) {
