@@ -27,12 +27,13 @@ export default function Profile() {
   }, [username]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
-      setUser(res.data);
-      dispatch({ type: "UPDATEUSER", payload: res.data} );
-    };
-    fetchUser();
+    if(loggedInUser._id === user._id){
+      const fetchUser = async () => {
+        const res = await axios.get(`/users?username=${loggedInUser.username}`);
+        setUser(res.data);
+      };
+      fetchUser();
+    }
   }, [userChanged]);
 
   const fileInputRef = useRef(null);
@@ -62,12 +63,14 @@ export default function Profile() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: "UPDATEUSER", payload:data} );
         setUserChanged(!userChanged);
       } else {
-        console.log("some prblem", response);
+        console.log("some problem", response);
       }
     } catch (error) {
-      console.log("some prblem server error", error);
+      console.log("some problem server error", error);
     }
   };
   const handleProfilePicUpload = async (event) => {
@@ -81,13 +84,14 @@ export default function Profile() {
         body: formData,
       });
       if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: "UPDATEUSER", payload:data} );
         setUserChanged(!userChanged);
-        console.log("file uploaded successfully", response);
       } else {
-        console.log("some prblem", response);
+        console.log("some problem", response);
       }
     } catch (error) {
-      console.log("some prblem server error", error);
+      console.log("some problem server error", error);
     }
   };
 
@@ -150,7 +154,6 @@ export default function Profile() {
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">{user.username}</h4>
-              <span className="profileInfoDesc">{user.desc}</span>
             </div>
           </div>
           <div className="profileRightBottom">

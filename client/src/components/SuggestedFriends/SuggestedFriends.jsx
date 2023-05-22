@@ -19,18 +19,18 @@ export default function SuggestedFriends({ user }) {
   return (
     <div>
       {Array.isArray(users) ? (
-        users.map((user, index) => <li key={index} className="sidebarFriend">
-            <Link to={`/profile/${user.username}`} className="sidebarFriendLink">
+        users.map((singleUser, index) => <li key={index} className="sidebarFriend">
+            <Link to={`/profile/${singleUser.username}`} className="sidebarFriendLink">
           <img
             src={
-              user.profilePicture
-              ? PF + "profilePic/" + user.profilePicture
+              singleUser.profilePicture
+              ? PF + "profilePic/" + singleUser.profilePicture
               : PF + "person/noAvatar.png"
             }
             alt=""
             className="sidebarFriendImg"
           />
-          <span className="sidebarFriendName">{user.username}</span>
+          <span className="sidebarFriendName">{singleUser.username}</span>
           </Link>
         </li>)
       ) : (
