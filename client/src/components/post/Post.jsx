@@ -9,7 +9,6 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function Post({ post, updatePostsFetch }) {
   const [like, setLike] = useState(post.likes.length);
@@ -77,10 +76,6 @@ export default function Post({ post, updatePostsFetch }) {
         userId: currentUser._id,
         commentText: comment,
       });
-      // let allComments = await axios.get("/posts/" + post._id + "/comments");
-      // setComments(allComments.data);
-      // console.log("comments form comment handler:", comments);
-      // console.log("Allcomments form comment handler:", allComments.data);
     } catch (err) {}
   };
 

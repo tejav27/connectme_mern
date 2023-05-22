@@ -2,18 +2,11 @@ import "./topbar.css";
 import { Search, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { logoutCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Topbar() {
-  const { user, updateUser, dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const handleUpdateUser = () => {
-    // Perform necessary actions to update the user data
-    const newUserData = { name: 'John Doe', email: 'john@example.com' };
-    updateUser(newUserData);
-  };
 
   const handleLogout = (e) => {
     e.preventDefault();

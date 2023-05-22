@@ -51,7 +51,11 @@ const UserSchema = new mongoose.Schema(
     from: {
       type: String,
       max: 50,
-    }
+    },
+    school: {
+      type: String,
+      max: 50,
+    },
   },
   { timestamps: true }
 );

@@ -80,8 +80,6 @@ router.put('/:id/uploadProfPic', upload.single('profilePicture'), async (req, re
 router.get("/", UserController.getUser)
 router.get("/all", UserController.allUsers)
 router.put("/:id", UserController.updateUser)
-// router.put('/:id/uploadCoverPic', UserController.updateCoverPicture)
-// router.put('/:id/uploadProfPic', UserController.updateProfilePicture)
 router.delete("/:id", UserController.deleteUser)
 router.get("/friends/:userId", UserController.userFriends)
 router.get("/suggestedfriends/:userId", UserController.suggestedFriends)

@@ -1,7 +1,6 @@
 import "./rightbar.css";
 import FriendsList from "../FriendsList/FriendsList";
-import { useContext, useEffect } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Rightbar({ user }) {

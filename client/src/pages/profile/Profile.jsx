@@ -38,7 +38,7 @@ export default function Profile() {
   const fileInputRef = useRef(null);
   const fileCoverInputRef = useRef(null);
 
-  const handlePictureClick = () => {
+  const handleProfilePictureClick = () => {
     if (loggedInUser._id === user._id) {
       fileInputRef.current.click();
     }
@@ -70,7 +70,7 @@ export default function Profile() {
       console.log("some prblem server error", error);
     }
   };
-  const handlePictureUpload = async (event) => {
+  const handleProfilePicUpload = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("profilePicture", file);
@@ -133,13 +133,13 @@ export default function Profile() {
                       : PF + "person/noAvatar.png"
                   }
                   alt=""
-                  onClick={handlePictureClick}
+                  onClick={handleProfilePictureClick}
                 />
                 {loggedInUser._id === user._id ? (
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={handlePictureUpload}
+                    onChange={handleProfilePicUpload}
                     ref={fileInputRef}
                     style={{ display: "none" }}
                   />
