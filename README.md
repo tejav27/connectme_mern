@@ -56,6 +56,7 @@ Connect Me is built with the help of various technologies and resources, includi
 - [Express.js](https://expressjs.com) - A fast and minimalist web framework for Node.js
 - [MongoDB](https://www.mongodb.com) - A general-purpose, document-based database
 - [Redux](https://redux.js.org) - A state management library for JavaScript apps
+- [Material UI](https://mui.com/) - A React Component Library for all necessary stylings
 
 ## Contact
 For any questions or inquiries, feel free to reach out to the project maintainer at tejav2727@gmail.com
