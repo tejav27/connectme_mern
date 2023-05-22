@@ -94,7 +94,7 @@ export default function Post({ post, updatePostsFetch }) {
                 src={
                   user.profilePicture
                     ? PF + "profilePic/" + user.profilePicture
-                    : PF + "person/noAvatar.png"
+                    : PF + "person/defaultProfPic.png"
                 }
                 alt=""
               />

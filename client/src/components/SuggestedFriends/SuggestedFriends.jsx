@@ -25,7 +25,7 @@ export default function SuggestedFriends({ user }) {
             src={
               singleUser.profilePicture
               ? PF + "profilePic/" + singleUser.profilePicture
-              : PF + "person/noAvatar.png"
+              : PF + "person/defaultProfPic.png"
             }
             alt=""
             className="sidebarFriendImg"

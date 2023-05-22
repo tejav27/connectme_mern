@@ -134,7 +134,7 @@ export default function Profile() {
                   src={
                     user.profilePicture
                       ? PF + "profilePic/" + user.profilePicture
-                      : PF + "person/noAvatar.png"
+                      : PF + "person/defaultProfPic.png"
                   }
                   alt=""
                   onClick={handleProfilePictureClick}

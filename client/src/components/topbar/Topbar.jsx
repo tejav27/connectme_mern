@@ -44,10 +44,11 @@ export default function Topbar() {
             src={
               user.profilePicture
               ? PF + "profilePic/" + user.profilePicture
-              : PF + "person/noAvatar.png"
+              : PF + "person/defaultProfPic.png"
             }
             alt=""
             className="topbarImg"
+            title={user.username}
           />
         </Link>
           <div className="topbarIconItem">

@@ -27,7 +27,7 @@ export default function FriendsList({ user }) {
                 src={
                   user.profilePicture
                     ? PF + "profilePic/" + user.profilePicture
-                    : PF + "person/noAvatar.png"
+                    : PF + "person/defaultProfPic.png"
                 }
                 alt=""
                 className="rightbarFriendImg"
