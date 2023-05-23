@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 const UserController = require('../controllers/UserController')
 const router = require("express").Router();
+const Authenticate = require('../middleware/Authenticate');
 
 //upload cover picture for a user
 const storageCover = multer.diskStorage({
@@ -81,7 +82,7 @@ router.get("/", UserController.getUser)
 router.get("/all", UserController.allUsers)
 router.put("/:id", UserController.updateUser)
 router.delete("/:id", UserController.deleteUser)
-router.get("/friends/:userId", UserController.userFriends)
+router.get("/friends/:userId", Authenticate.isLoggedIn, UserController.userFriends)
 router.get("/suggestedfriends/:userId", UserController.suggestedFriends)
 router.put("/:id/follow",  UserController.followUser)
 router.put("/:id/unfollow", UserController.unfollowUser)

@@ -81,8 +81,12 @@ module.exports = {
       );
       let friendList = [];
       friends.map((friend) => {
+        if (friend) {
         const { _id, username, profilePicture } = friend;
         friendList.push({ _id, username, profilePicture });
+      } else {
+        console.log('Friend object is null.');
+      }
       });
       res.status(200).json(friendList)
     } catch (err) {
@@ -99,7 +103,6 @@ module.exports = {
       const suggestedList = await Promise.all(
         allUsers.filter(item => item._id!=userId && !user.followings.includes(item.id))
       )
-      
       let suggetedListtoSend = [];
       suggestedList.map((friend) => {
         const { _id, username, profilePicture } = friend;

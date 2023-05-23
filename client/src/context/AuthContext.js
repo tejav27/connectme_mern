@@ -5,23 +5,19 @@ const INITIAL_STATE = {
   user:JSON.parse(localStorage.getItem("user")) || null,
   isFetching: false,
   error: false,
+  token:JSON.parse(localStorage.getItem("token")) || null,
 };
-
 
 export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
-  const [usergpt, setUsergpt] = useState(null);
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
   
   useEffect(()=>{
     localStorage.setItem("user", JSON.stringify(state.user))
-  },[state.user])
+    localStorage.setItem("token", JSON.stringify(state.token))
+  },[state.user, state.token])
   
-  const updateUser = (newUserData) => {
-    setUsergpt(newUserData);
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -29,8 +25,7 @@ export const AuthContextProvider = ({ children }) => {
         isFetching: state.isFetching,
         error: state.error,
         dispatch,
-        updateUser,
-        usergpt,
+        token:state.token,
       }}
     >
       {children}
