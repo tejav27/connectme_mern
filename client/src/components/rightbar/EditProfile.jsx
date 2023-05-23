@@ -1,8 +1,5 @@
 import "./rightbar.css";
-import FriendsList from "../FriendsList/FriendsList";
-import { useContext, useState, useEffect, useRef } from "react";
-import axios from "axios";
-import cloneDeep from 'lodash.clonedeep';
+import { useContext, useState, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import TextField from "@mui/material/TextField";
 

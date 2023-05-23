@@ -79,7 +79,6 @@ module.exports = {
           return User.findById(friendId);
         })
       );
-      console.log("friends from route users", friends);
       let friendList = [];
       friends.map((friend) => {
         const { _id, username, profilePicture } = friend;
@@ -100,7 +99,6 @@ module.exports = {
       const suggestedList = await Promise.all(
         allUsers.filter(item => item._id!=userId && !user.followings.includes(item.id))
       )
-      console.log("suggestedList", suggestedList);
       
       let suggetedListtoSend = [];
       suggestedList.map((friend) => {

@@ -29,7 +29,6 @@ module.exports = {
       deletePost: async (req, res) => {
         try {
           const post = await Post.findById(req.params.id);
-          console.log("req bodyyyy jhj", req.body);
           if (post.userId === req.body.userId) {
             await post.deleteOne();
             res.status(200).json("the post has been deleted");
@@ -99,7 +98,7 @@ module.exports = {
             { new: true },
             (err, post) => {
               if (err) {
-                console.log(err);
+                res.status(404).json(err);
               } else {
                 res.status(200).json(post);
               }
@@ -114,7 +113,6 @@ module.exports = {
         try{
           const post = await Post.findById(req.params.id);
           const comments = post.comments;
-          console.log(comments,"commentssssss");
           if(comments){
             res.status(200).json(comments)
           }else{
