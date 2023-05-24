@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import TextField from "@mui/material/TextField";
 
 export default function EditProfile() {
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch, token } = useContext(AuthContext);
   const [isEdit, setIsEdit] = useState(false);
   const about = useRef();
   const from = useRef();
@@ -34,11 +34,12 @@ export default function EditProfile() {
         body: JSON.stringify(updateFields),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch({ type: "UPDATEUSER", payload:data} );
+        dispatch({ type: "UPDATEUSER", payload: data });
       } else {
         console.log("Some problem", response);
       }
@@ -51,7 +52,7 @@ export default function EditProfile() {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-          <button onClick={handleProfileEdit}>Edit Profile</button>
+        <button onClick={handleProfileEdit}>Edit Profile</button>
         <br />
         <br />
         <h4 className="rightbarTitle">About {user.username}</h4>
@@ -113,7 +114,7 @@ export default function EditProfile() {
                 inputRef={school}
               />
             ) : (
-              <span className="rightbarInfoValue">{user.school}</span> 
+              <span className="rightbarInfoValue">{user.school}</span>
             )}
           </div>
           {isEdit ? (

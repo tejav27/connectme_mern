@@ -36,6 +36,7 @@ module.exports = {
             res.status(403).json("you can delete only your post");
           }
         } catch (err) {
+          console.log("Error deleting a post: ", err);
           res.status(500).json(err);
         }
       },
@@ -119,6 +120,7 @@ module.exports = {
             res.status(204).json({meesage:"No comments found"});
           }
         }catch(err){
+          console.log("Error retrieving comments: ", err);
           res.status(500).json(err);
         }
       }

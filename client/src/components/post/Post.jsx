@@ -57,7 +57,6 @@ export default function Post({ post, updatePostsFetch }) {
           userId: currentUser._id,
         }
       });
-      setStateChanged(!stateChanged);
       updatePostsFetch(true);
     }catch(err){
       console.log("couldn't delete post");

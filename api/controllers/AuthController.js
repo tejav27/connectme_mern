@@ -26,8 +26,6 @@ module.exports = {
           process.env.JWT_SECRET,
           { expiresIn: "1d" }
         );
-        console.log("token", token);
-
         res.status(200).json({user, token});
       }else{
         res.status(400).json("Email already exists!!");
@@ -56,7 +54,6 @@ module.exports = {
         process.env.JWT_SECRET,
         { expiresIn: "1d" }
       );
-      console.log("token", token);
       res.status(200).json({user:newUser, token});
     } catch (err) {
       res.status(500).json(err);

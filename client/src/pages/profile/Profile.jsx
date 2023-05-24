@@ -67,10 +67,10 @@ export default function Profile() {
         dispatch({ type: "UPDATEUSER", payload:data} );
         setUserChanged(!userChanged);
       } else {
-        console.log("some problem", response);
+        console.log("Problem uploading cover picture: ", response);
       }
     } catch (error) {
-      console.log("some problem server error", error);
+      console.log("Problem server error: ", error);
     }
   };
   const handleProfilePicUpload = async (event) => {
@@ -88,10 +88,10 @@ export default function Profile() {
         dispatch({ type: "UPDATEUSER", payload:data} );
         setUserChanged(!userChanged);
       } else {
-        console.log("some problem", response);
+        console.log("Problem uploading profile picture: ", response);
       }
     } catch (error) {
-      console.log("some problem server error", error);
+      console.log("Problem server error: ", error);
     }
   };
 

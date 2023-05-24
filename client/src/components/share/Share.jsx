@@ -27,7 +27,9 @@ export default function Share({updatePostsFetch}) {
       newPost.img = fileName;
       try {
         await axios.post("/upload", data);
-      } catch (err) {}
+      } catch (err) {
+        console.log("Error sharing post: ", err);
+      }
     }
     try {
       await axios.post("/posts", newPost);

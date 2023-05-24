@@ -18,7 +18,7 @@ const storageCover = multer.diskStorage({
 });
 const uploadCover = multer({ storage: storageCover });
 
-router.put('/:id/uploadCoverPic', uploadCover.single('coverPicture'), async (req, res) => {
+router.put('/:id/uploadCoverPic', Authenticate.isLoggedIn, uploadCover.single('coverPicture'), async (req, res) => {
   try {
     const userId = req.params.id;
     const file = req.file;
@@ -53,7 +53,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.put('/:id/uploadProfPic', upload.single('profilePicture'), async (req, res) => {
+router.put('/:id/uploadProfPic', Authenticate.isLoggedIn, upload.single('profilePicture'), async (req, res) => {
   try {
     const userId = req.params.id;
     const file = req.file;
@@ -76,13 +76,13 @@ router.put('/:id/uploadProfPic', upload.single('profilePicture'), async (req, re
   }
 });
 
-router.get("/", UserController.getUser)
-router.get("/all", UserController.allUsers)
-router.put("/:id", UserController.updateUser)
-router.delete("/:id", UserController.deleteUser)
+router.get("/", Authenticate.isLoggedIn, UserController.getUser)
+router.get("/all", Authenticate.isLoggedIn, UserController.allUsers)
+router.put("/:id", Authenticate.isLoggedIn, UserController.updateUser)
+router.delete("/:id", Authenticate.isLoggedIn, UserController.deleteUser)
 router.get("/friends/:userId", Authenticate.isLoggedIn, UserController.userFriends)
-router.get("/suggestedfriends/:userId", UserController.suggestedFriends)
-router.put("/:id/follow",  UserController.followUser)
-router.put("/:id/unfollow", UserController.unfollowUser)
+router.get("/suggestedfriends/:userId", Authenticate.isLoggedIn, UserController.suggestedFriends)
+router.put("/:id/follow",  Authenticate.isLoggedIn, UserController.followUser)
+router.put("/:id/unfollow", Authenticate.isLoggedIn, UserController.unfollowUser)
 
 module.exports = router;

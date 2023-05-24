@@ -8,12 +8,30 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
+import axios from "axios";
 import "./App.css";
+
+const setAuthHeader = (token) => {
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+};
+
+const useAxiosInterceptor = () => {
+  const { token } = useContext(AuthContext);
+  useEffect(() => {
+    setAuthHeader(token);
+  }, [token]);
+};
+
 
 function App() {
   const { user } = useContext(AuthContext);
+  useAxiosInterceptor();
   return (
     <Router>
       <Switch>
@@ -26,7 +44,6 @@ function App() {
         </Route>
         <Route path="/profile/:username">
           {user ? <Profile /> : <Register />}
-          <Profile />
         </Route>
       </Switch>
     </Router>
