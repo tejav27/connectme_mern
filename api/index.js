@@ -16,7 +16,7 @@ dotenv.config();
 
 connectDB();
 
-app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use("/images", express.static(path.join(__dirname, '..', "public/images")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
@@ -30,12 +30,13 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("File uploded successfully");
-  } catch (error) {
-    console.error(error);
-  }
+app.post('/api/upload', (req, res) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json("Image uploaded successfully");
+  });
 });
 
 app.use("/api/auth", authRoute);

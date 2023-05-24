@@ -76,8 +76,6 @@ router.put('/:id/uploadProfPic', upload.single('profilePicture'), async (req, re
   }
 });
 
-
-
 router.get("/", UserController.getUser)
 router.get("/all", UserController.allUsers)
 router.put("/:id", UserController.updateUser)

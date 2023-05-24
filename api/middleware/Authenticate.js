@@ -9,7 +9,6 @@ module.exports = {
       if (!user) {
         throw new Error();
       } 
-      console.log("going to another level");
       next();
     } catch (error) {
       res.status(401).send({ error: "Unauthorized" });
@@ -19,8 +18,6 @@ module.exports = {
 
 function verifyToken(req) {
   const token = req.header("Authorization").replace("Bearer ", "");
-  // const data = jwt.verify(token, process.env.JWT_SECRET);
-  const data = jwt.verify(token, "secret");
-  console.log("tokn verified", data);
+  const data = jwt.verify(token, process.env.JWT_SECRET);
   return data;
 }
