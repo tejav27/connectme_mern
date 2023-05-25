@@ -102,7 +102,8 @@ export default function Post({ post, updatePostsFetch }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            < DeleteIcon onClick={handleDeletePost} style={{cursor: "pointer"}} />
+            { post.userId=== currentUser._id && 
+            < DeleteIcon onClick={handleDeletePost} style={{cursor: "pointer"}} /> }
           </div>
         </div>
         <div className="postCenter">
@@ -159,14 +160,6 @@ export default function Post({ post, updatePostsFetch }) {
               ))}
               <Divider />
             </Box>
-            //          <div>
-            //   {comments.map((comment) => (
-            //     <div key={comment._id}>
-            //       <span>{comment.userName}: </span>
-            //       <span>{comment.text}</span>
-            //     </div>
-            //   ))}
-            // </div>
           )}
         </div>
       </div>

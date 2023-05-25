@@ -16,6 +16,7 @@ export default function Profile() {
   const {
     user: loggedInUser,
     dispatch,
+    token,
   } = useContext(AuthContext);
   const [userChanged, setUserChanged] = useState(false);
   useEffect(() => {
@@ -60,6 +61,9 @@ export default function Profile() {
         {
           method: "PUT",
           body: formData,
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         }
       );
       if (response.ok) {
@@ -82,6 +86,9 @@ export default function Profile() {
       const response = await fetch(`/users/${loggedInUser._id}/uploadProfPic`, {
         method: "PUT",
         body: formData,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
       });
       if (response.ok) {
         const data = await response.json();

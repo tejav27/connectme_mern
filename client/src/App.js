@@ -10,24 +10,8 @@ import {
 } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
-import axios from "axios";
 import "./App.css";
-
-const setAuthHeader = (token) => {
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common['Authorization'];
-  }
-};
-
-const useAxiosInterceptor = () => {
-  const { token } = useContext(AuthContext);
-  useEffect(() => {
-    setAuthHeader(token);
-  }, [token]);
-};
-
+import useAxiosInterceptor from "./useAxiosInterceptor";
 
 function App() {
   const { user } = useContext(AuthContext);
