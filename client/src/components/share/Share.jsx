@@ -35,7 +35,12 @@ export default function Share({updatePostsFetch}) {
       await axios.post("/posts", newPost);
       updatePostsFetch(true);
       desc.current.value = '';
-    } catch (err) {}
+      setFile(null);
+    } catch (err) {
+      console.log("Error sending post: ", err);
+      desc.current.value = '';
+      setFile(null);
+    }
   };
   
   return (
@@ -52,7 +57,7 @@ export default function Share({updatePostsFetch}) {
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.username + "?"}
+            placeholder={"What's on your mind " + user.username + "?"}
             className="shareInput"
             ref={desc}
           />
@@ -68,7 +73,7 @@ export default function Share({updatePostsFetch}) {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Photo</span>
               <input
                 style={{ display: "none" }}
                 type="file"

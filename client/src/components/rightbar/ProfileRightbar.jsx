@@ -36,38 +36,38 @@ export default function ProfileRightbar({ user }) {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-      {user._id !== currentUser._id ? (
-        <div>
-          <button className="rightbarFollowButton" onClick={handleFollow}>
-            {followed ? "Unfollow" : "Follow"}
-          </button>
-        <br />
-        <br />
-        <h4 className="rightbarTitle">About {user.username}</h4>
-        <span className="rightbarInfoKey">
-          Few words about {user.username}:
-        </span>
-        <span className="rightbarInfoValue">{user.desc}</span>
-        <div className="rightbarInfo">
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">{user.city}</span>
+        {user._id !== currentUser._id ? (
+          <div>
+            <button className="rightbarFollowButton" onClick={handleFollow}>
+              {followed ? "Unfollow" : "Follow"}
+            </button>
+            <br />
+            <br />
+            <h4 className="rightbarTitle">About {user.username}</h4>
+            <span className="rightbarInfoKey">
+              Interests:
+            </span>
+            <span className="rightbarInfoValue">{user.desc}</span>
+            <div className="rightbarInfo">
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">City:</span>
+                <span className="rightbarInfoValue">{user.city}</span>
+              </div>
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">From:</span>
+                <span className="rightbarInfoValue">{user.from}</span>
+              </div>
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">School/Work:</span>
+                <span className="rightbarInfoValue">{user.school}</span>
+              </div>
+              <span />
+            </div>
           </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">{user.from}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">School/Work:</span>
-            <span className="rightbarInfoValue">{user.school}</span>
-          </div>
-          <span />
-        </div>
-        <h4 className="rightbarTitle">{user.username}'s friends</h4>
-        </div>
-         ) : (
-          <EditProfile/>
+        ) : (
+          <EditProfile />
         )}
+        <h4 className="rightbarTitle">{user.username}'s friends</h4>
         <ul className="rightbarFriendList">
           <FriendsList user={user} />
         </ul>

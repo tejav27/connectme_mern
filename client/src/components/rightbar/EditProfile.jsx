@@ -57,7 +57,7 @@ export default function EditProfile() {
         <br />
         <h4 className="rightbarTitle">About {user.username}</h4>
         <span className="rightbarInfoKey">
-          Few words about {user.username}:
+          Interests:
         </span>
         {isEdit ? (
           <TextField

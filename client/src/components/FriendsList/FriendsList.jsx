@@ -24,7 +24,7 @@ export default function FriendsList({ user }) {
         });
     };
     fetchUser();
-  }, []);
+  }, [user]);
   return (
     <div>
       {Array.isArray(users) ? (
@@ -48,7 +48,7 @@ export default function FriendsList({ user }) {
           </li>
         ))
       ) : (
-        <li>Sorry, no suggestions found.</li>
+        <li>No friends found</li>
       )}
     </div>
   );
