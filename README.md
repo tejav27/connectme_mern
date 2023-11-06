@@ -4,8 +4,6 @@
 ## About the Project
 Connect Me is a social media app that aims to provide a user-friendly and intuitive platform for connecting and sharing content within smaller-scale communities. It offers features similar to popular social media platforms, allowing users to create profiles, follow others, share posts with images, and engage through likes and comments.
 
-Check out the sample output of the project here: https://docs.google.com/document/d/1Lqm573RrsoZlruzB5_O07NNvOiZpxp8E/edit?usp=drive_link&ouid=108246884671744599459&rtpof=true&sd=true 
-
 ## Current Scope
 The current scope of Connect Me includes the following key features:
 - User registration and authentication
@@ -62,6 +60,3 @@ Connect Me is built with the help of various technologies and resources, includi
 
 ## Contact
 For any questions or inquiries, feel free to reach out to the project maintainer at tejav2727@gmail.com
-
-## Some Interesting Screen Grabs
-Below are some screen grabs showcasing the user interface and highlighting the key features of Connect Me.
